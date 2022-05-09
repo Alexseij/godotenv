@@ -1,3 +1,3 @@
-module github.com/Alexseij/godotenv/v1
+module github.com/Alexseij/godotenv
 
 go 1.12
