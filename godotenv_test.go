@@ -449,7 +449,6 @@ func TestWrite(t *testing.T) {
 	writeAndCompare(`key="10"`, `key=10`)
 
 }
-
 func TestRoundtrip(t *testing.T) {
 	fixtures := []string{"equals.env", "exported.env", "plain.env", "quoted.env"}
 	for _, fixture := range fixtures {
