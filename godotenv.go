@@ -178,7 +178,7 @@ func MarshalWithComments(envMap map[string]string, comments map[string]string) (
 		if d, err := strconv.Atoi(v); err == nil {
 			lines = append(lines, fmt.Sprintf(`%s=%d`, k, d))
 		} else {
-			lines = append(lines, fmt.Sprintf(`%s="%s"`, k, doubleQuoteEscape(v)))
+			lines = append(lines, fmt.Sprintf(`%s=%s`, k, doubleQuoteEscape(v)))
 		}
 	}
 	sort.Strings(lines)
