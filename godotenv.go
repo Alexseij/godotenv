@@ -175,14 +175,19 @@ func Write(envMap map[string]string, filename string) error {
 func MarshalWithComments(envMap map[string]string, comments map[string]string) (string, error) {
 	lines := []string{}
 	for k, v := range envMap {
-		if commentValue, ok := comments[k]; ok {
-			lines = append(lines, fmt.Sprintf(`# %s`, commentValue))
-			strings.Join(lines, "\n")
-		}
 		if d, err := strconv.Atoi(v); err == nil {
 			lines = append(lines, fmt.Sprintf(`%s=%d`, k, d))
 		} else {
 			lines = append(lines, fmt.Sprintf(`%s="%s"`, k, doubleQuoteEscape(v)))
+		}
+	}
+	sort.Strings(lines)
+
+	for index, line := range lines {
+		if commentData, ok := comments[line]; ok {
+			lines = append(lines, "")
+			copy(lines[index+1:], lines[index:])
+			lines[index] = commentData + "\n"
 		}
 	}
 	return strings.Join(lines, "\n"), nil
