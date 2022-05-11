@@ -183,14 +183,18 @@ func MarshalWithComments(envMap map[string]string, comments map[string]string) (
 	}
 	sort.Strings(lines)
 
-	for index, line := range lines {
-		key := strings.Split(strings.Trim(line, "`"), "=")[0]
-		if commentData, ok := comments[key]; ok {
-			lines = append(lines, "")
-			copy(lines[index+1:], lines[index:])
-			lines[index] = "# " + commentData + "\n"
+	for key, value := range comments {
+		for index, line := range lines {
+			lineKey := strings.Split(strings.Trim(line, "`"), "=")[0]
+			if lineKey == key {
+				lines = append(lines, "")
+				copy(lines[index+1:], lines[index:])
+				lines[index] = "# " + value
+				break
+			}
 		}
 	}
+
 	return strings.Join(lines, "\n"), nil
 }
 
